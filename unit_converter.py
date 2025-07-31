@@ -1,6 +1,8 @@
 import unit_converter
+import pint
+
 def converter():
-    
+
     '''
     The user can input a value to convert.
 The user can select the units to convert from and to.
@@ -50,11 +52,13 @@ Temperature: Celsius, Fahrenheit, Kelvin. '''
         return
 
     
-    value = float(input(f"Please enter the value in {from_unit}: "))
-    converted_value = unit_converter.converter(value, from_unit, to_unit)
-     
     
-    print(f"{value} {from_unit} is equal to {converted_value} {to_unit}")
+    value = float(input(f"Please enter the value in {from_unit}: "))
+    ureg = pint.UnitRegistry()
+    value_in_units = value * ureg(from_unit)
+    converted_value = value_in_units.to(to_unit)
+
+    print(f"{value} {from_unit} is equal to {converted_value.magnitude} {to_unit}")
 
 converter()
 
